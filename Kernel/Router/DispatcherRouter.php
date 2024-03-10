@@ -16,7 +16,6 @@ class DispatcherRouter
 
         return \FastRoute\simpleDispatcher(function (RouteCollector $route) {
             $route->addRoute('GET', '/', [HomeController::class, 'index']);
-            $route->addRoute('POST', '/', [FormController::class, 'auth']);
             $route->addRoute('GET', '/about', [AboutController::class, 'index']);
         });
     }

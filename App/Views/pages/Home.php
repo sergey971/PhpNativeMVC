@@ -1,9 +1,9 @@
 <?php
-use App\Controllers\View;
+use App\Controllers\ViewController;
 $title = 'Главная страница';
-View::part('header', $title);
+ViewController::part('header', $title);
 ?>
 <h1>home</h1>
 <?php
-View::part('footer');
+ViewController::part('footer');
 ?>

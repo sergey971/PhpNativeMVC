@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class View
+class ViewController
 {
     public static function page($name): void{
         require_once VIEWS_PATH . '/pages/' . $name . '.php';

@@ -1,7 +1,7 @@
 <?php
 session_start();
 /**
- * @var \App\Controllers\View $title
+ * @var \App\Controllers\ViewController $title
  * */ ?>
 <!doctype html>
 <html lang="en">

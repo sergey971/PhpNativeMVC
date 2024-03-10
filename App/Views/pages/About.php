@@ -1,10 +1,10 @@
 <?php
 
-use App\Controllers\View;
+use App\Controllers\ViewController;
 $title = 'Обо мне';
-View::part('header', $title);
+ViewController::part('header', $title);
 ?>
     <h1>About</h1>
 <?php
-View::part('footer');
+ViewController::part('footer');
 ?>
