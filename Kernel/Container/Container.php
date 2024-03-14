@@ -6,16 +6,15 @@ use Kernel\Http\Request;
 
 class Container
 {
-    public readonly Request $request; // Объявление свойства $request
+
+    public readonly Request $request;
 
     public function __construct()
     {
-        $this->registerServices(); // Вызов метода для регистрации сервисов
+        $this -> registerServices();
     }
 
-    private function registerServices(): void
-    {
-        $this->request = Request::createFromGlobals(); // Создание объекта Request и присвоение его свойству $request
-
+    public function registerServices(){
+        $this->request = Request::getRequestMethod();
     }
 }

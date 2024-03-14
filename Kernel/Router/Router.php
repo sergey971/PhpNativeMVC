@@ -1,44 +1,83 @@
 <?php
 
 namespace Kernel\Router;
-
+// Импортируем нужные классы FastRoute
+use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
-use Kernel\Container\Container; // Импортируем класс Container
+use App\Controller\HomeController;
+use App\Controller\AboutController;
+use Kernel\Container\Container;
 use Kernel\Http\Request;
-use Kernel\Router\UriParser;
 
 class Router
 {
-    private Container $container; // Свойство для хранения экземпляра контейнера
-    protected Dispatcher $dispatcher; // Свойство для хранения экземпляра Dispatcher
 
-    public function __construct(Dispatcher $dispatcher)
+    private $routesCallback;
+
+
+    public function getRoutesCallback()
     {
-        $this->dispatcher = $dispatcher; // Присваиваем переданный экземпляр Dispatcher
+        return $this->routesCallback;
     }
 
-    public function dispatch()
+    public function startRouter()
     {
-        $request = $this->container = new Container(); // Создаем экземпляр контейнера и присваиваем его переменной $request
-        $httpMethod = $request->request->method(); // Получаем метод HTTP из объекта Request
-        $uri = $request->request->uri(); // Разбираем URI с помощью UriParser
-        $routeInfo = $this->dispatcher->dispatch($httpMethod, $uri); // Диспетчеризация запроса
+//        Создаем новый экземпляр класса Container
+        $container = new Container();
+        $routesCallback = $this->getRoutesCallback();
+
+
+// Определяем функцию для получения информации о маршрутах
+        $routesCallback = function (RouteCollector $r) {
+            $r->addRoute('GET', '/', [HomeController::class, 'index']);
+            $r->addRoute('GET', '/about', [AboutController::class, 'index']);
+            // Добавьте другие маршруты здесь
+        };
+
+// Инициализируем маршруты с помощью RouteCollector
+        $dispatcher = \FastRoute\simpleDispatcher($routesCallback);
+
+// Получаем информацию о текущем HTTP-запросе
+        $httpMethod = $container->request->method();
+        $uri = $container->request->uri();
+
+// Отправляем запрос FastRoute для определения действия для выполнения
+        $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+// Обработка результата
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
-                echo '404 Not Found'; // Выводим сообщение о том, что маршрут не найден
+                // Обработка случая, когда маршрут не найден
+                echo "404 Not Found";
                 break;
             case Dispatcher::METHOD_NOT_ALLOWED:
-                $allowedMethods = $routeInfo[1]; // Получаем разрешенные методы
-                echo '405 Method Not Allowed'; // Выводим сообщение о неподдерживаемом методе
+                // Обработка случая, когда метод не разрешен
+                echo "405 Method Not Allowed";
                 break;
             case Dispatcher::FOUND:
-                $handler = $routeInfo[1]; // Получаем обработчик маршрута
-                $vars = $routeInfo[2]; // Получаем переменные маршрута
-                if (is_callable($handler)) { // Проверяем, является ли обработчик маршрута callable
-                    call_user_func_array($handler, $vars); // Вызываем обработчик маршрута с переданными переменными
-                } else {
-                    echo "Handler is not callable"; // Выводим сообщение о том, что обработчик не является callable
-                }
+                // Получаем информацию о найденном маршруте
+                $handler = $routeInfo[1];
+                $vars = $routeInfo[2];
+
+                // Разбиваем имя контроллера и метода
+//        list($controllerName, $methodName) = explode('@', $handler, 2);
+                // Создаем экземпляр контроллера и вызываем метод
+                $controllerClass = $handler[0];   //В этой строке получается имя класса
+                // контроллера из массива $handler. Этот элемент массива содержит имя
+                // класса контроллера, который должен быть использован для обработки
+                // текущего запроса [HomeController::class].
+                $methodName = $handler[1]; //В этой строке получается имя метода,
+                // который должен быть вызван для обработки запроса. Этот элемент массива содержит имя метода,
+                // который должен быть вызван в контексте найденного контроллера. [HomeController::class, 'index']
+                $controller = new $controllerClass; //Создаётся новый экземпляр класса контроллера,
+                // используя имя класса, полученное на первом шаге.
+                // Этот экземпляр будет использован для вызова метода обработки запроса.
+                $controller->$methodName($vars); // Вызывается метод контроллера с именем, полученным на втором шаге,
+                // и передаются переменные запроса (если они есть). Этот метод обрабатывает сам запрос,
+                // используя информацию, переданную в маршруте и переменные запроса.
+
+                //Этот код позволяет динамически создавать экземпляры контроллеров и вызывать
+                // методы на основе результатов маршрутизации, обеспечивая гибкую обработку запросов
+                // в вашем веб-приложении.
                 break;
         }
     }
