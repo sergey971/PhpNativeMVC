@@ -1,8 +1,6 @@
+
 <?php
-
-use Kernel\Views\View;
-
-View::components('start', 'Главная');
+$view->components("start");
 ?>
 
 
@@ -10,5 +8,5 @@ View::components('start', 'Главная');
 
 
 <?php
-View::components('end');
+$view->components("end");
 ?>

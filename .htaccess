@@ -1,4 +1,8 @@
 RewriteEngine On
+
+# Исключение для обработки файлов CSS напрямую
+RewriteCond %{REQUEST_URI} !\.(css)$
+
 RewriteCond %{REQUEST_FILENAME} !-f [OR]
 RewriteCond %{REQUEST_FILENAME} !-d
 

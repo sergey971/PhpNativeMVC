@@ -5,14 +5,18 @@ namespace Kernel\Views;
 
 class View
 {
-    public function page($name){
+    public function page(string $name):void{
+        extract([
+            "view" => $this
+        ]);
 
         require_once VIEW_PATH . "/pages/" . $name . ".php";
     }
 
 
-    public static function components($name, $title = '')
+    public function components(string $name, $title = ''): void
     {
-       return require_once VIEW_PATH . "/components/" . $name . ".php";
+
+       require_once VIEW_PATH . "/components/" . $name . ".php";
     }
 }

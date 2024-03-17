@@ -1,10 +1,12 @@
+
 <?php
-use Kernel\Views\View;
-View::components('start', 'Обо мне');
+$view->components("start");
 ?>
 
-<h1>About page</h1>
+
+<h1>about</h1>
+
 
 <?php
-View::components('end');
+$view->components("end");
 ?>
