@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Controller;
-
-class HomeController
+use Kernel\Controller\Controller;
+class HomeController extends Controller
 {
-    public function index(){
-        echo "hello";
+
+
+    public function index()
+    {
+            $this->view('home');
     }
+
+
 }

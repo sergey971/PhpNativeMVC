@@ -16,5 +16,7 @@ class Container
 
     public function registerServices(){
         $this->request = Request::getRequestMethod();
+
+
     }
 }

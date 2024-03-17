@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
-class AboutController
+use Kernel\Controller\Controller;
+class AboutController extends Controller
 {
-    public function index(){
-        echo "about";
+    public function index()
+    {
+        $this->view('about');
     }
+
 }

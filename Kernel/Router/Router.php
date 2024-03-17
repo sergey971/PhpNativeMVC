@@ -7,8 +7,7 @@ use FastRoute\Dispatcher;
 use App\Controller\HomeController;
 use App\Controller\AboutController;
 use Kernel\Container\Container;
-use Kernel\Http\Request;
-
+use Kernel\Views\View;
 class Router
 {
 
