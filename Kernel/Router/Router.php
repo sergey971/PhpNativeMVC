@@ -8,6 +8,7 @@ use App\Controller\HomeController;
 use App\Controller\AboutController;
 use Kernel\Container\Container;
 use Kernel\Views\View;
+use App\Controller\AddController;
 class Router
 {
 
@@ -30,6 +31,7 @@ class Router
         $routesCallback = function (RouteCollector $r) {
             $r->addRoute('GET', '/', [HomeController::class, 'index']);
             $r->addRoute('GET', '/about', [AboutController::class, 'index']);
+                $r->addRoute('GET', '/admin/post/add', [AddController::class, 'add']);
             // Добавьте другие маршруты здесь
         };
 

@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @var \Kernel\Views\View $view
@@ -7,7 +6,7 @@ $view->components("start");
 ?>
 
 
-    <h1>home</h1>
+    <h1>Add post blog page</h1>
 
 
 <?php

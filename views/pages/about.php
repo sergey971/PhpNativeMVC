@@ -1,5 +1,8 @@
 
 <?php
+/**
+ * @var \Kernel\Views\View $view
+ */
 $view->components("start");
 ?>
 
