@@ -15,6 +15,7 @@ abstract class Controller
 
     public  function view($name){
         $this ->view ->page($name);
+
     }
 
 
