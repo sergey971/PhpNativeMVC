@@ -31,7 +31,8 @@ class Router
         $routesCallback = function (RouteCollector $r) {
             $r->addRoute('GET', '/', [HomeController::class, 'index']);
             $r->addRoute('GET', '/about', [AboutController::class, 'index']);
-                $r->addRoute('GET', '/admin/post/add', [AddController::class, 'add']);
+            $r->addRoute('GET', '/admin/articles/add', [AddController::class, 'add']);
+            $r->addRoute('POST', '/admin/articles/add', [AddController::class, 'store']);
             // Добавьте другие маршруты здесь
         };
 
